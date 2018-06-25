@@ -1,0 +1,11 @@
+TOPIC
+    about_PSDepend
+
+SHORT DESCRIPTION
+    ModuleFactory is a module that provides functions used to create new PowerShell modules.
+
+DETAILED DESCRIPTION
+    ModuleFactory is a module that provides functions used to create new PowerShell modules.
+
+SEE ALSO
+    https://github.com/wekempf/ModuleFactory

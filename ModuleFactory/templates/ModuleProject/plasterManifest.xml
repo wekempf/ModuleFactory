@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="1.1" templateType="Project" 
+  xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+  <metadata>
+    <name>ModuleProject</name>
+    <id>e7c1ed22-c90f-4ebc-9b51-0ef340efc6da</id>
+    <version>0.0.1</version>
+    <title>Module Project</title>
+    <description>Default Module Project template for ModuleFactory.</description>
+    <author>William E. Kempf</author>
+    <tags></tags>
+  </metadata>
+  <parameters>
+    <parameter name='ModuleName' type='text' prompt='Name of the module'/>
+    <parameter name='ModuleDescription' type='text' prompt='Brief description of this module'/>
+    <parameter name='ModuleAuthor' type='user-fullname' prompt='Author'/>
+    <parameter name='ModuleVersion' type='text' prompt='Version number' default='1.0'/>
+  </parameters>
+  <content>
+    <message>Creating folder structure</message>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}/public'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}/private'/>
+    <file source='' destination='${PLASTER_PARAM_ModuleName}/classes'/>
+    <message>Creating files</message>
+    <newModuleManifest destination='${PLASTER_PARAM_ModuleName}/${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='${PLASTER_PARAM_ModuleVersion}' rootModule='${PLASTER_PARAM_ModuleName}.psm1' author='${PLASTER_PARAM_ModuleAuthor}' description='${PLASTER_PARAM_ModuleDescription}'/>
+    <file source='module/module.psm1' destination='${PLASTER_PARAM_ModuleName}/${PLASTER_PARAM_ModuleName}.psm1'/>
+    <templateFile source='README.md' destination='README.md'/>
+    <templateFile source='module.build.ps1' destination='${PLASTER_PARAM_ModuleName}.build.ps1'/>
+  </content>
+</plasterManifest>
