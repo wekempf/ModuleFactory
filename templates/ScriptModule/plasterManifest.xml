@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="1.1" templateType="Project" 
+  xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+  <metadata>
+    <name>ScriptModule</name>
+    <id>e3f795f4-9080-465d-a915-3cc266c0694d</id>
+    <version>0.0.1</version>
+    <title>Script Module</title>
+    <description>Default Script Module template for ModuleFactory.</description>
+    <author>William E. Kempf</author>
+    <tags></tags>
+  </metadata>
+  <parameters>
+    <parameter name='ModuleName' type='text' prompt='Name of the module'/>
+    <parameter name='ModuleDescription' type='text' prompt='Brief description of this module'/>
+    <parameter name='ModuleAuthor' type='user-fullname' prompt='Author'/>
+    <parameter name='ModuleVersion' type='text' prompt='Version number' default='1.0'/>
+  </parameters>
+  <content>
+    <message>Creating folder structure</message>
+    <file source='' destination='public'/>
+    <file source='' destination='private'/>
+    <file source='' destination='classes'/>
+    <message>Creating files</message>
+    <newModuleManifest destination='${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='${PLASTER_PARAM_ModuleVersion}' rootModule='${PLASTER_PARAM_ModuleName}.psm1' author='${PLASTER_PARAM_ModuleAuthor}' description='${PLASTER_PARAM_ModuleDescription}'/>
+    <file source='module.psm1' destination='${PLASTER_PARAM_ModuleName}.psm1'/>
+  </content>
+</plasterManifest>

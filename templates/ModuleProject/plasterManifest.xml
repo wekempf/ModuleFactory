@@ -18,13 +18,10 @@
   </parameters>
   <content>
     <message>Creating folder structure</message>
-    <file source='' destination='${PLASTER_PARAM_ModuleName}/public'/>
-    <file source='' destination='${PLASTER_PARAM_ModuleName}/private'/>
-    <file source='' destination='${PLASTER_PARAM_ModuleName}/classes'/>
+    <file source='' destination='tests'/>
     <message>Creating files</message>
-    <newModuleManifest destination='${PLASTER_PARAM_ModuleName}/${PLASTER_PARAM_ModuleName}.psd1' moduleVersion='${PLASTER_PARAM_ModuleVersion}' rootModule='${PLASTER_PARAM_ModuleName}.psm1' author='${PLASTER_PARAM_ModuleAuthor}' description='${PLASTER_PARAM_ModuleDescription}'/>
-    <file source='module/module.psm1' destination='${PLASTER_PARAM_ModuleName}/${PLASTER_PARAM_ModuleName}.psm1'/>
     <templateFile source='README.md' destination='README.md'/>
+    <file source='build.ps1' destination='build.ps1'/>
     <templateFile source='module.build.ps1' destination='${PLASTER_PARAM_ModuleName}.build.ps1'/>
   </content>
 </plasterManifest>

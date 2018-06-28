@@ -6,7 +6,7 @@ param(
     [string]$ModuleDir = '~\Documents\WindowsPowerShell\Modules'
 )
 
-$moduleName = 'ModuleFactory'
+$moduleName = '<%= $PLASTER_PARAM_ModuleName %>'
 $tools = Join-Path $PsScriptRoot '.tools'
 $buildNumber = 0
 $gitRepo = ((git remote -v | Select-String origin | select-object -first 1) -split '\s')[1]
@@ -32,7 +32,7 @@ task InstallDependencies {
             Target = $tools
         }
         PSScriptAnalyzer = 'latest'
-        Pester           = 'latest'
+        Pester = 'latest'
     }
     Invoke-PSDepend -InputObject $install -Install -Confirm:$false
     Invoke-PSDepend -InputObject $import -Install -Import -Confirm:$false
@@ -45,28 +45,18 @@ task Clean {
     New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
 }
 
-task Analyze InstallDependencies, {
+task Analyze {
     $saParams = @{
-        Path        = $moduleName
-        Recurse     = $true
-        ExcludeRule = '*\templates\*'
+        Path    = $moduleName
+        Recurse = $true
     }
     $saResults = Invoke-ScriptAnalyzer @saParams
     $saResults | ConvertTo-Json | Set-Content (Join-Path $OutputDir 'ScriptAnalysisResults.json')
 }
 
 task Build Clean, InstallDependencies, Analyze, {
-    $moduleDir = Join-Path $OutputDir $moduleName
-    New-Item -ItemType Directory -Path $moduleDir -Force | Out-Null
-    Copy-Item -Path "$moduleName/*" -Destination $moduleDir -Recurse -Force | Out-Null
-
-    $templateDir = Join-Path $moduleDir 'templates'
-    New-Item -ItemType Directory -Path $templateDir -Force | Out-Null
-    Copy-Item -Path "templates/*" -Destination $templateDir -Recurse -Force | Out-Null
-
-    $hooksDir = Join-Path $moduleDir 'hooks'
-    New-Item -ItemType Directory -Path $hooksDir -Force | Out-Null
-    Copy-Item -Path "hooks/*" -Destination $hooksDir -Recurse -Force | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $OutputDir $moduleName) | Out-Null
+    Copy-Item -Path $moduleName -Destination (Join-Path $OutputDir $moduleName) -Recurse -Force | Out-Null
 }
 
 task _RunTests InstallDependencies, {
@@ -77,7 +67,7 @@ task _RunTests InstallDependencies, {
         Strict       = $true
         PassThru     = $true
         EnableExit   = $false
-        CodeCoverage = (Get-ChildItem -Path "$OutputDir/$moduleName/*.ps1" -Recurse | Where-Object { $_ -notmatch '.*\\templates\\'}).FullName
+        CodeCoverage = (Get-ChildItem -Path "$OutputDir/$moduleName/*.ps1" -Recurse).FullName
     }
     $pesterResults = Invoke-Pester @pesterParams
     $pesterResults | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $OutputDir 'PesterResults.json')
@@ -88,12 +78,12 @@ task _RunTests InstallDependencies, {
         GetRepoUrl         = $gitRepo
         CiUrl              = $gitRepo
         ShowHitCommands    = $true
-        Compliance         = ($percentCompliance / 100)
+        Compliance         = ($PercentCompliance / 100)
         ScriptAnalyzerFile = (Join-Path $OutputDir 'ScriptAnalysisResults.json')
         PesterFile         = (Join-Path $OutputDir 'PesterResults.json')
         OutputDir          = $OutputDir
     }
-    . "$tools/PSTestReport/Invoke-PSTestReport.ps1" @psTestReportParams
+    . '$tools/PSTestReport/Invoke-PSTestReport.ps1' @psTestReportParams
 }
 
 task _ConfirmTestsPassed {

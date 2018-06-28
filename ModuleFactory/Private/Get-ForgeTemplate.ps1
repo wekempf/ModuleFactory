@@ -1,4 +1,4 @@
-function Get-ModuleTemplate {
+function Get-ForgeTemplate {
     [CmdletBinding()]
     param (
         [Parameter(Position = 0, Mandatory = $false)]
@@ -18,7 +18,7 @@ function Get-ModuleTemplate {
             Get-Item "$ModuleRoot\templates\$Name" -ErrorAction SilentlyContinue | Where-Object { $_.PSIsContainer }
         }
         else {
-            Get-ModuleTemplate $Name -All | Select-Object -First 1
+            Get-ForgeTemplate $Name -All | Select-Object -First 1
         }
     }
 

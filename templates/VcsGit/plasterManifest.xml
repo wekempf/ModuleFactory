@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="1.1" templateType="Project" 
+    xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+    <metadata>
+        <name>VcsGit</name>
+        <id>35c074a3-9386-452d-b3dd-785aafcd8cbc</id>
+        <version>0.0.1</version>
+        <title>Git Version Control</title>
+        <description>Default Git template for ModuleFactory.</description>
+        <author>William E. Kempf</author>
+        <tags></tags>
+    </metadata>
+    <content>
+        <message>Creating files</message>
+        <file source='gitignore' destination='.gitignore'/>
+    </content>
+</plasterManifest>

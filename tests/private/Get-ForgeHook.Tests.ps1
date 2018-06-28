@@ -4,6 +4,7 @@ param(
 )
 
 $module = Get-ChildItem -Path $OutputDir -Include ModuleFactory.psd1 -Recurse | Select-Object -First 1
+Remove-Module ModuleFactory -ErrorAction SilentlyContinue
 Import-Module $module -Force
 
 InModuleScope ModuleFactory {
