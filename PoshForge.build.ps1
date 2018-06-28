@@ -6,7 +6,7 @@ param(
     [string]$ModuleDir = '~\Documents\WindowsPowerShell\Modules'
 )
 
-$moduleName = 'ModuleFactory'
+$moduleName = 'PoshForge'
 $tools = Join-Path $PsScriptRoot '.tools'
 $buildNumber = 0
 $gitRepo = ((git remote -v | Select-String origin | select-object -first 1) -split '\s')[1]

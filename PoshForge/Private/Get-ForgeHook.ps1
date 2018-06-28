@@ -12,8 +12,8 @@ function Get-ForgeHook {
 
     process {
         if ($All) {
-            if (Test-Path '~\.modulefactory\hooks') {
-                Get-Item "~\.modulefactory\hooks\$Name.ps1" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
+            if (Test-Path '~\.poshforge\hooks') {
+                Get-Item "~\.poshforge\hooks\$Name.ps1" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
             }
             Get-Item "$ModuleRoot\hooks\$Name.ps1" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
         }

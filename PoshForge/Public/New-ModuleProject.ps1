@@ -18,13 +18,13 @@ function New-ModuleProject {
 
         # Specifies the module author.
         #
-        # If you omit this parameter, New-ModuleProject will first try to use the Author specified in ~\.modulefactory\config.psd1 or the name of the current user.
+        # If you omit this parameter, New-ModuleProject will first try to use the Author specified in ~\.poshforge\config.psd1 or the name of the current user.
         [Parameter(Mandatory = $false)]
         [string]$Author,
 
         # Specifies the version of the module.
         #
-        # This parameter is not required by the cmdlet. If you omit this parameter, New-ModuleProject creates a ModuleVersion key with either the ModuleVersion key specified in ~\.modulefactory\config.psd1 or a value of "1.0".
+        # This parameter is not required by the cmdlet. If you omit this parameter, New-ModuleProject creates a ModuleVersion key with either the ModuleVersion key specified in ~\.poshforge\config.psd1 or a value of "1.0".
         [Parameter(Mandatory = $false)]
         [Version]$ModuleVersion,
 

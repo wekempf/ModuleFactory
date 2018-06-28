@@ -12,8 +12,8 @@ function Get-ForgeTemplate {
 
     process {
         if ($All) {
-            if (Test-Path '~\.modulefactory\templates') {
-                Get-Item "~\.modulefactory\templates\$Name" -ErrorAction SilentlyContinue | Where-Object { $_.PSIsContainer }
+            if (Test-Path '~\.poshforge\templates') {
+                Get-Item "~\.poshforge\templates\$Name" -ErrorAction SilentlyContinue | Where-Object { $_.PSIsContainer }
             }
             Get-Item "$ModuleRoot\templates\$Name" -ErrorAction SilentlyContinue | Where-Object { $_.PSIsContainer }
         }

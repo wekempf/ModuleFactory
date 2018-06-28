@@ -8,9 +8,10 @@ function Get-Configuration {
     }
 
     process {
-        if (Test-Path ~\.modulefactory\config.psd1) {
-            Import-PowerShellDataFile ~\.modulefactory\config.psd1
-        } else {
+        if (Test-Path ~\.poshforge\config.psd1) {
+            Import-PowerShellDataFile ~\.poshforge\config.psd1
+        }
+        else {
             @{}
         }
     }

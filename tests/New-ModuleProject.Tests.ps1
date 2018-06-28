@@ -3,22 +3,22 @@ param(
     $OutputDir
 )
 
-$module = Get-ChildItem -Path $OutputDir -Include ModuleFactory.psd1 -Recurse | Select-Object -First 1
-Remove-Module ModuleFactory
+$module = Get-ChildItem -Path $OutputDir -Include PoshForge.psd1 -Recurse | Select-Object -First 1
+Remove-Module PoshForge
 Import-Module $module -Force
 
 Describe "Get-ModuleTemplate" {
     BeforeEach {
-        if (Test-Path ~/.modulefactory) {
-            Move-Item ~/.modulefactory ~/.modulefactory.bak | Out-Null
+        if (Test-Path ~/.poshforge) {
+            Move-Item ~/.poshforge ~/.poshforge.bak | Out-Null
         }
     }
     AfterEach {
-        if (Test-Path ~/.modulefactory) {
-            Remove-Item ~/.modulefactory -Recurse -Force | Out-Null
+        if (Test-Path ~/.poshforge) {
+            Remove-Item ~/.poshforge -Recurse -Force | Out-Null
         }
-        if (Test-Path ~/.modulefactory.bak) {
-            Move-Item ~/.modulefactory.bak ~/.modulefactory | Out-Null
+        if (Test-Path ~/.poshforge.bak) {
+            Move-Item ~/.poshforge.bak ~/.poshforge | Out-Null
         }
     }
     Context "All parameters" {
@@ -46,9 +46,9 @@ Describe "Get-ModuleTemplate" {
     }
     Context "Hooks" {
         It "Should run hooks" {
-            New-Item ~\.modulefactory\hooks -ItemType Directory -Force | Out-Null
-            Set-Content -Path ~\.modulefactory\hooks\PreModuleProject.ps1 -Value "New-Item TestDrive:\pre.txt -ItemType File -Force" -Force
-            Set-Content -Path ~\.modulefactory\hooks\ModuleProject.ps1 -Value "New-Item TestDrive:\post.txt -ItemType File -Force" -Force
+            New-Item ~\.poshforge\hooks -ItemType Directory -Force | Out-Null
+            Set-Content -Path ~\.poshforge\hooks\PreModuleProject.ps1 -Value "New-Item TestDrive:\pre.txt -ItemType File -Force" -Force
+            Set-Content -Path ~\.poshforge\hooks\ModuleProject.ps1 -Value "New-Item TestDrive:\post.txt -ItemType File -Force" -Force
 
             Push-Location TestDrive:\
             try {
