@@ -1,25 +1,11 @@
-param(
-    [Parameter(Mandatory = $True)]
-    $OutputDir
-)
+& $PSScriptRoot\ImportModule.ps1
 
-$module = Get-ChildItem -Path $OutputDir -Include PoshForge.psd1 -Recurse | Select-Object -First 1
-Remove-Module PoshForge
-Import-Module $module -Force
-
-Describe "Get-ModuleTemplate" {
+Describe "New-ModuleProject" {
     BeforeEach {
-        if (Test-Path ~/.poshforge) {
-            Move-Item ~/.poshforge ~/.poshforge.bak | Out-Null
-        }
+        & $PSScriptRoot\BackupConfig.ps1
     }
     AfterEach {
-        if (Test-Path ~/.poshforge) {
-            Remove-Item ~/.poshforge -Recurse -Force | Out-Null
-        }
-        if (Test-Path ~/.poshforge.bak) {
-            Move-Item ~/.poshforge.bak ~/.poshforge | Out-Null
-        }
+        & $PSScriptRoot\RestoreConfig.ps1
     }
     Context "All parameters" {
         It "Should generate module project" {
@@ -28,7 +14,7 @@ Describe "Get-ModuleTemplate" {
             $description = 'My module'
             $author = 'John Doe'
 
-            New-ModuleProject -DestinationPath "TestDrive:\$moduleName" -Description $description -Author $author -ModuleVersion $version
+            New-ModuleProject -DestinationPath "TestDrive:\$moduleName" -Description $description -Author $author -Version $version
 
             $psd1 = "TestDrive:\$moduleName\$moduleName\$moduleName.psd1"
             if (Test-Path $psd1) {
@@ -46,9 +32,11 @@ Describe "Get-ModuleTemplate" {
     }
     Context "Hooks" {
         It "Should run hooks" {
-            New-Item ~\.poshforge\hooks -ItemType Directory -Force | Out-Null
-            Set-Content -Path ~\.poshforge\hooks\PreModuleProject.ps1 -Value "New-Item TestDrive:\pre.txt -ItemType File -Force" -Force
-            Set-Content -Path ~\.poshforge\hooks\ModuleProject.ps1 -Value "New-Item TestDrive:\post.txt -ItemType File -Force" -Force
+            $configDir = Get-PoshForgeConfigurationPath
+            $hooksDir = Join-Path $configDir hooks
+            New-Item $hooksDir -ItemType Directory -Force | Out-Null
+            Set-Content -Path $hooksDir\PreModuleProject.ps1 -Value "New-Item TestDrive:\pre.txt -ItemType File -Force" -Force
+            Set-Content -Path $hooksDir\ModuleProject.ps1 -Value "New-Item TestDrive:\post.txt -ItemType File -Force" -Force
 
             Push-Location TestDrive:\
             try {

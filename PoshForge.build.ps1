@@ -1,11 +1,4 @@
-param(
-    [Parameter(Mandatory = $False)]
-    [string]$OutputDir = (Join-Path $PsScriptRoot 'output'),
-
-    [Parameter(Mandatory = $False)]
-    [string]$ModuleDir = '~\Documents\WindowsPowerShell\Modules'
-)
-
+$outputDir = Join-Path $PsScriptRoot 'output'
 $moduleName = 'PoshForge'
 $tools = Join-Path $PsScriptRoot '.tools'
 $buildNumber = 0
@@ -13,10 +6,19 @@ $gitRepo = ((git remote -v | Select-String origin | select-object -first 1) -spl
 $percentCompliance = 80
 
 task InstallDependencies {
-    if (-not (Test-Path (Join-Path $tools 'PSDepend'))) {
-        New-Item -Path $tools -ItemType Directory -Force | Out-Null
-        Save-Module -Name PSDepend -Path $tools
-        Import-Module (Get-ChildItem -Path $tools -Include PSDepend.psd1 -Recurse)
+    New-Item $tools -ItemType Directory -Force | Out-Null
+    if (-not (Get-Command Invoke-PSDepend -ErrorAction SilentlyContinue)) {
+        if (-not (Test-Path (Join-Path $tools PSDepend))) {
+            Save-Module -Name PSDepend -Path $tools
+        }
+        $oldModulePath = $env:PSModulePath
+        $env:PSModulePath += ";$tools"
+        try {
+            Import-Module PSDepend
+        }
+        finally {
+            $env:PSModulePath = $oldModulePath
+        }
     }
 
     $install = @{
@@ -33,6 +35,13 @@ task InstallDependencies {
         }
         PSScriptAnalyzer = 'latest'
         Pester           = 'latest'
+    }
+    $manifestFile = Join-Path $moduleName "$moduleName.psd1"
+    $manifest = Import-PowerShellDataFile $manifestFile
+    if ($manifest.ContainsKey('RequiredModules')) {
+        @($manifest.RequiredModules) | ForEach-Object {
+            $import[$_] = 'latest'
+        }
     }
     Invoke-PSDepend -InputObject $install -Install -Confirm:$false
     Invoke-PSDepend -InputObject $import -Install -Import -Confirm:$false
@@ -109,13 +118,22 @@ task _ConfirmTestsPassed {
 task Test Build, _RunTests, _ConfirmTestsPassed
 
 task Install Build, {
-    $destination = Join-Path $ModuleDir $moduleName
+    $destination = Join-Path "$home\Documents\WindowsPowerShell\Modules" $moduleName
     if (Test-Path $destination) {
         Remove-Item $destination -Recurse -Force
     }
-    $source = Join-Path (Join-Path $OutputDir $moduleName) '*'
+    $moduleSource = Join-Path $outputDir $moduleName
+    $source = Join-Path $moduleSource '*'
     New-Item -ItemType Directory -Path $destination -Force | Out-Null
     Copy-Item -Path $source -Destination $destination -Recurse -Force | Out-Null
+
+    $manifestFile = Join-Path $moduleSource "$moduleName.psd1"
+    $manifest = Import-PowerShellDataFile $manifestFile
+    if ($manifest.ContainsKey('RequiredModules')) {
+        @($manifest.RequiredModules) | ForEach-Object {
+            Install-Module $_ -Scope CurrentUser
+        }
+    }
 }
 
 task . Test

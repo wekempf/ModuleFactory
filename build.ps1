@@ -12,19 +12,25 @@ param (
 )
 
 begin {
+    if (-not (Get-Command 'Invoke-Build' -ErrorAction SilentlyContinue)) {
+        $tools = Join-Path $PsScriptRoot '.tools'
+        New-Item $tools -ItemType Directory -Force | Out-Null
+        $oldModulePath = $env:PSModulePath
+        $env:PSModulePath += ";$tools"
+        try {
+            if (-not (Test-Path (Join-Path $tools InvokeBuild))) {
+                Save-Module -Name InvokeBuild -Path $tools
+            }
+            Write-Host "Importing InvokeBuild"
+            Import-Module InvokeBuild
+        }
+        finally {
+            $env:PSModulePath = $oldModulePath
+        }
+    }
 }
 
 process {
-    if (-not (Get-Command 'Invoke-Build')) {
-        $tools = Join-Path $PsScriptRoot '.tools'
-        $invokeBuild = Get-ChildItem -Path $tools -Include InvokeBuild.psd1 -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-        if (-not $invokeBuild) {
-            New-Item -Path $tools -ItemType Directory -Force | Out-Null
-            Save-Module -Name InvokeBuild -Path $tools
-            $invokeBuild = Get-ChildItem -Path $tools -Include InvokeBuild.psd1 -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-        }
-        Import-Module $invokeBuild
-    }
     Push-Location $PsScriptRoot
     try {
         Invoke-Build @PSBoundParameters

@@ -23,9 +23,9 @@ function Invoke-ForgeTemplate {
         if (-not $PSBoundParameters.ContainsKey('Verbose')) {
             $VerbosePreference = $PSCmdlet.SessionState.PSVariable.GetValue('VerbosePreference')
         }
-        $pre = Get-ForgeHook "Pre$Name"
-        $post = Get-ForgeHook $Name
-        $template = Get-ForgeTemplate $Name
+        $pre = Get-PoshForgeHook "Pre$Name"
+        $post = Get-PoshForgeHook $Name
+        $template = Get-PoshForgeTemplate $Name
     }
 
     process {

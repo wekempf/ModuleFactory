@@ -1,5 +1,5 @@
 TOPIC
-    about_PSDepend
+    about_PoshForge
 
 SHORT DESCRIPTION
     PoshForge is a module that provides functions used to create new PowerShell modules.
