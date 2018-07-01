@@ -1,4 +1,5 @@
 function New-DynamicParameter {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "", Justification="Private function that doesn't actually modify any permanent state.")]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $False, ValueFromPipeline = $True)]

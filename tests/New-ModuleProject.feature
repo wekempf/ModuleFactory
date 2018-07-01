@@ -15,3 +15,28 @@ Feature: New-ModuleProject
         And the module directory should have a 'public' directory
         And the module directory should have a 'private' directory
         And the module directory should have a 'classes' directory
+
+    Scenario: Scaffolding with Git as VersionControl parameter.
+        Given I am in a directory without a 'MyModule' directory
+        When I execute New-ModuleProject with
+            """
+            DestinationPath = MyModule
+            Description = A simple module.
+            VersionControl = Git
+            """
+        Then the module project directory should have a '.gitignore' file
+        And the module project directory should have a '.git' directory
+
+    Scenario: Scaffolding with Git as VersionControl configuration value.
+        Given I am in a directory without a 'MyModule' directory
+        When I have configuration with the values
+            """
+            VersionControl = Git
+            """
+        When I execute New-ModuleProject with
+            """
+            DestinationPath = MyModule
+            Description = A simple module.
+            """
+        Then the module project directory should have a '.gitignore' file
+        And the module project directory should have a '.git' directory
