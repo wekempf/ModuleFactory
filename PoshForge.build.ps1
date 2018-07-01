@@ -80,15 +80,15 @@ task Build Clean, InstallDependencies, Analyze, {
 
 task _RunTests InstallDependencies, {
     $pesterParams = @{
-        Script       = @{ Path = (Join-Path $PsScriptRoot tests); Parameters = @{ OutputDir = $OutputDir } }
-        Outputfile   = (Join-Path $OutputDir 'TestResults.xml')
+        Path         = Join-Path $PsScriptRoot tests
+        Outputfile   = Join-Path $OutputDir 'TestResults.xml'
         OutputFormat = 'NUnitXml'
         Strict       = $true
         PassThru     = $true
         EnableExit   = $false
-        CodeCoverage = (Get-ChildItem -Path "$OutputDir/$moduleName/*.ps1" -Recurse | Where-Object { $_ -notmatch '.*\\templates\\'}).FullName
+        CodeCoverage = (Get-ChildItem -Path "$OutputDir/$moduleName/*.ps1" -Recurse | Where-Object { $_ -notmatch '.*\\(templates|hooks|private)\\' }).FullName
     }
-    $pesterResults = Invoke-Pester @pesterParams
+    $pesterResults = Invoke-Gherkin @pesterParams
     $pesterResults | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $OutputDir 'PesterResults.json')
 
     $psTestReportParams = @{
