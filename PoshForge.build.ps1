@@ -44,8 +44,8 @@ task InstallDependencies {
             $import[$_] = 'latest'
         }
     }
-    Invoke-PSDepend -InputObject $install -Install -Confirm:$false | Out-Null
-    Invoke-PSDepend -InputObject $import -Install -Import -Confirm:$false | Out-Null
+    Invoke-PSDepend -InputObject $install -Install -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
+    Invoke-PSDepend -InputObject $import -Install -Import -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
 }
 
 task Clean {
