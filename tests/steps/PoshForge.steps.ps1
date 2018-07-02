@@ -29,7 +29,7 @@ When 'I execute New-ScriptModule with' {
 
     $params = $Data | ConvertFrom-StringData
     New-ScriptModule @params
-    $context.moduleDirectory = $params.DestinationPath
+    $context['moduleDirectory'] = $params.DestinationPath
 }
 
 When 'I have configuration with the values' {
@@ -46,13 +46,13 @@ When 'I execute New-ModuleProject with' {
 
     $params = $Data | ConvertFrom-StringData
     New-ModuleProject @params
-    $context.moduleProjectDirectory = $params.DestinationPath
-    $moduleName = Split-Path $context.moduleProjectDirectory -Leaf
-    $context.moduleDirectory = Join-Path $context.moduleProjectDirectory $moduleName
+    $context['moduleProjectDirectory'] = $params.DestinationPath
+    $moduleName = Split-Path $context['moduleProjectDirectory'] -Leaf
+    $context['moduleDirectory'] = Join-Path $context['moduleProjectDirectory'] $moduleName
 }
 
 When 'I call Get-PoshForgeConfiguration' {
-    $context.poshForgeConfiguration = Get-PoshForgeConfiguration
+    $context['poshForgeConfiguration'] = Get-PoshForgeConfiguration
 }
 
 When 'I execute Update-PoshForgeConfiguration with' {
@@ -66,7 +66,7 @@ When 'I execute Update-PoshForgeConfiguration with' {
 When 'I call Get-PoshForgeConfigurationPath with scope ''(?<Scope>.*?)''' {
     param($Scope)
 
-    $context.poshForgeConfigurationPath = Get-PoshForgeConfigurationPath -Scope $Scope
+    $context['poshForgeConfigurationPath'] = Get-PoshForgeConfigurationPath -Scope $Scope
 }
 
 Then 'a ''(?<ModuleDirectory>.*?)'' module directory should be created' {
@@ -84,53 +84,53 @@ Then 'a ''(?<ModuleProjectDirectory>.*?)'' module project directory should be cr
 Then 'the module project directory should have a ''(?<ModuleDirectory>.*?)'' module directory' {
     param($ModuleDirectory)
 
-    $path = Join-Path $context.moduleProjectDirectory $ModuleDirectory
+    $path = Join-Path $context['moduleProjectDirectory'] $ModuleDirectory
     Test-Path $path -PathType Container | Should be $True
 }
 
 Then 'the module project directory should have a ''(?<DirectoryName>.*?)'' directory' {
     param($DirectoryName)
 
-    $path = Join-Path $context.moduleProjectDirectory $DirectoryName
+    $path = Join-Path $context['moduleProjectDirectory'] $DirectoryName
     Test-Path $path -PathType Container | Should be $True
 }
 
 Then 'the module project directory should have a ''(?<FileName>.*?)'' file' {
     param($FileName)
 
-    $path = Join-Path $context.moduleProjectDirectory $FileName
+    $path = Join-Path $context['moduleProjectDirectory'] $FileName
     Test-Path $path -PathType Leaf | Should be $True
 }
 
 Then 'the module directory should have a ''(?<FileName>.*?)'' file' {
     param($FileName)
 
-    $path = Join-Path $context.moduleDirectory $FileName
+    $path = Join-Path $context['moduleDirectory'] $FileName
     Test-Path $path -PathType Leaf | Should be $True
 }
 
 Then 'the module directory should have a ''(?<DirectoryName>.*?)'' directory' {
     param($DirectoryName)
 
-    $path = Join-Path $context.moduleDirectory $DirectoryName
+    $path = Join-Path $context['moduleDirectory'] $DirectoryName
     Test-Path $path -PathType Container | Should be $True
 }
 
 Then 'manifest should have a key ''(?<KeyName>.*?)'' with value ''(?<Value>.*?)''' {
     param($KeyName, $Value)
 
-    $moduleName = Split-Path $context.moduleDirectory -Leaf
-    $path = Join-Path $context.moduleDirectory "$moduleName.psd1"
+    $moduleName = Split-Path $context['moduleDirectory'] -Leaf
+    $path = Join-Path $context['moduleDirectory'] "$moduleName.psd1"
     $manifest = Import-PowerShellDataFile $path
     $manifest[$KeyName] | Should be $Value
 }
 
 Then 'I should get the configuration values' {
-    $context.poshForgeConfiguration | Should not be $null
+    $context['poshForgeConfiguration'] | Should not be $null
 }
 
 Then 'I should get the configuration path' {
-    $context.poshForgeConfigurationPath | Should not be $null
+    $context['poshForgeConfigurationPath'] | Should not be $null
 }
 
 Then 'configuration should have property key ''(?<PropertyName>.*?)'' with value ''(?<Value>.*?)''' {
