@@ -48,6 +48,7 @@ task InstallDependencies {
     Invoke-PSDepend -InputObject $import -Install -Import -Confirm:$false
 
     Get-ChildItem  -Path $tools
+    Get-Module Pester
 }
 
 task Clean {
