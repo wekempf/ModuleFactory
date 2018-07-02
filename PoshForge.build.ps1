@@ -46,6 +46,8 @@ task InstallDependencies {
     }
     Invoke-PSDepend -InputObject $install -Install -Confirm:$false
     Invoke-PSDepend -InputObject $import -Install -Import -Confirm:$false
+
+    Get-ChildItem  -Path $tools
 }
 
 task Clean {
