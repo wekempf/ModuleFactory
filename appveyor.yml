@@ -19,5 +19,5 @@ build: false
 
 #Kick off the CI/CD pipeline
 test_script:
-  - ps: Install-PackageProvider -Name NuGet -Force
+  - ps: Install-PackageProvider -Name NuGet -Force | Out-Null
   - ps: .\build.ps1
