@@ -1,25 +1,3 @@
-<#
-.Synopsis
-    Scaffolds out a new module project.
-.Description
-    Scaffolds out a new module project complete with a build script, documentation support, custom type formating, dependency management and unit tests.
-.Parameter DestinationPath
-    Specifies the path to a directory to place the module project files.
-.Parameter Description
-    Specifies the description of the module to be created.
-.Parameter Author
-    Specifies the module author.
-
-    If you omit this parameter, New-ModuleProject will first try to use the Author key specified in the configuration (see about_PoshForge_Configuration) or the name of the current user.
-.Parameter Version
-    Specifies the version of the module.
-
-    This parameter is not required by the cmdlet. If you omit this parameter, New-ModuleProject creates a ModuleVersion key with either the ModuleVersion key specified in the configuration (see about_PoshForge_Configuration) or a value of "1.0".
-.Parameter Force
-    Forces this cmdlet to override the confirmation prompt and allow the cmdlet to overwrite existing files.
-.Link
-    about_PoshForge_Configuration
-#>
 function New-ModuleProject {
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
     [OutputType([System.IO.DirectoryInfo])]

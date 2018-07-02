@@ -35,6 +35,7 @@ task InstallDependencies {
         }
         PSScriptAnalyzer = 'latest'
         Pester           = 'latest'
+        Platyps          = 'latest'
     }
     $manifestFile = Join-Path $moduleName "$moduleName.psd1"
     $manifest = Import-PowerShellDataFile $manifestFile
@@ -68,6 +69,9 @@ task Build Clean, InstallDependencies, Analyze, {
     $moduleDir = Join-Path $OutputDir $moduleName
     New-Item -ItemType Directory -Path $moduleDir -Force | Out-Null
     Copy-Item -Path "$moduleName/*" -Destination $moduleDir -Recurse -Force | Out-Null
+
+    $docsDir = Join-Path $moduleDir 'en-US'
+    New-ExternalHelp -Path "docs" -OutputPath $docsDir | Out-Null
 
     $templateDir = Join-Path $moduleDir 'templates'
     New-Item -ItemType Directory -Path $templateDir -Force | Out-Null
