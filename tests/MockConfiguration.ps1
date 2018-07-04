@@ -1,5 +1,5 @@
 $configPaths = @(
-    $poshForgeDir
+    "$PSScriptRoot\output\PoshForge"
     'TestDrive:\Enterprise'
     'TestDrive:\Machine'
     'TestDrive:\User'

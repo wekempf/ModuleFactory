@@ -4,6 +4,7 @@ Import-Module $poshForge -Force
 Describe 'Get-PoshForgeConfigurationPath' {
     # Quiet output from Plaster
     Mock -ModuleName Plaster -CommandName Write-Warning {}
+    Mock -ModuleName Plaster -CommandName Write-Host {}
 
     Context 'Getting machine configuration path' {
         $configPath = Get-PoshForgeConfigurationPath -Scope Machine
