@@ -53,21 +53,30 @@ Describe 'New-ModuleProject' {
             Test-Path TestDrive:\MyModule\.gitignore -PathType Leaf | Should be $true
         }
     }
-    Context 'Scaffolding with Git as VersionControl configuration value' {
+    Context 'Scaffolding with configuration values' {
         Push-Location TestDrive:\
         try {
             $config = @{
+                Author         = 'Paul Bunyon'
+                Version        = '10.0'
                 VersionControl = 'Git'
             }
             New-Item TestDrive:\User -ItemType Directory -Force | Out-Null
             Export-Metadata -Path TestDrive:\User\Configuration.psd1 -InputObject $config
             New-ModuleProject -DestinationPath MyModule -Description 'A simple module'
+            $manifest = Import-Metadata -Path TestDrive:\MyModule\MyModule\MyModule.psd1
         }
         finally {
             Pop-Location
         }
-        It 'Should initialize Git repository' {
+        It 'Should initialize version control repository' {
             Test-Path TestDrive:\MyModule\.git -PathType Container | Should be $true
+        }
+        It 'Should set Author' {
+            $manifest.Author | Should be 'Paul Bunyon'
+        }
+        It 'Should set Version' {
+            $manifest.ModuleVersion | Should be '10.0'
         }
     }
 }
