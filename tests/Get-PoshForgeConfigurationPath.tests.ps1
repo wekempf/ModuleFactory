@@ -2,6 +2,9 @@ $poshForge = "$PSScriptRoot\..\output\PoshForge\PoshForge.psd1"
 Import-Module $poshForge -Force
 
 Describe 'Get-PoshForgeConfigurationPath' {
+    # Quiet output from Plaster
+    Mock -ModuleName Plaster -CommandName Write-Warning {}
+
     Context 'Getting machine configuration path' {
         $configPath = Get-PoshForgeConfigurationPath -Scope Machine
 
