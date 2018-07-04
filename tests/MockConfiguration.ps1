@@ -22,6 +22,7 @@ Mock -ModuleName PoshForge -CommandName Get-PoshForgeConfigurationPath {
     }
 }.GetNewClosure()
 Mock -ModuleName PoshForge -CommandName Get-PoshForgeConfiguration {
+    Write-Host "Get-PoshForgeConfiguration mock"
     $config = @{}
     foreach ($path in $configPaths) {
         $configFile = Join-Path $path Configuration.psd1
