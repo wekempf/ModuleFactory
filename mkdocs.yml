@@ -1,0 +1,17 @@
+# use_directory_urls: false
+site_author: William E. Kempf
+copyright: Copyright 2018, William E. Kempf
+theme: readthedocs
+site_name: PoshForge Documentation
+repo_url: https://github.com/wekempf/PoshForge
+pages:
+- index: index.md
+- About:
+  - Contributing to PoshForge: about/Contributing.md
+  - PoshForge Change Log: about/ChangeLog.md
+- Functions:
+  - Get-PoshForgeConfiguration: help/Get-PoshForgeConfiguration.md
+  - Get-PoshForgeConfigurationPath: help/Get-PoshForgeConfigurationPath.md
+  - New-ModuleProject: help/New-ModuleProject.md
+  - New-ScriptModule: help/New-ScriptModule.md
+  - Update-PoshForgeConfiguration: help/Update-PoshForgeConfiguration.md

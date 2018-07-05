@@ -71,7 +71,7 @@ task Build Clean, InstallDependencies, Analyze, {
     Copy-Item -Path "$moduleName/*" -Destination $moduleDir -Recurse -Force | Out-Null
 
     $docsDir = Join-Path $moduleDir 'en-US'
-    New-ExternalHelp -Path "docs" -OutputPath $docsDir | Out-Null
+    New-ExternalHelp -Path "docs\help" -OutputPath $docsDir | Out-Null
 
     $templateDir = Join-Path $moduleDir 'templates'
     New-Item -ItemType Directory -Path $templateDir -Force | Out-Null
