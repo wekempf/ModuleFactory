@@ -1,7 +1,7 @@
 ---
 external help file: PoshForge-help.xml
 Module Name: poshforge
-online version:
+online version: https://poshforge.readthedocs.io/en/latest/help/New-ModuleProject/
 schema: 2.0.0
 ---
 
@@ -190,4 +190,5 @@ for more information.
 
 ## RELATED LINKS
 
+[about_PoshForge](about_PoshForge)
 [about_PoshForge_Configuration](about_PoshForge_Configuration)

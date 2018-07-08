@@ -1,5 +1,6 @@
 function Get-PoshForgeConfiguration {
     [CmdletBinding()]
+    [OutputType([Hashtable])]
     param (
 
     )

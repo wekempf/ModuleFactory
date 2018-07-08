@@ -1,14 +1,15 @@
 ---
 external help file: PoshForge-help.xml
 Module Name: poshforge
-online version:
+online version: https://poshforge.readthedocs.io/en/latest/help/Update-PoshForgeConfiguration/
 schema: 2.0.0
 ---
 
 # Update-PoshForgeConfiguration
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+
+Updates a PoshForge configuration value.
 
 ## SYNTAX
 
@@ -17,21 +18,24 @@ Update-PoshForgeConfiguration [-PropertyName] <String> [-Value] <String> [-Scope
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+
+Update-PoshForgeConfiguration updates a PoshForge configuration value.
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Update-PoshForgeConfiguration -PropertyName Author -Value 'John Doe'
 ```
 
-{{ Add example description here }}
+Updates the 'Author' configuration property with the value 'John Doe'.
 
 ## PARAMETERS
 
 ### -PropertyName
-{{Fill PropertyName Description}}
+
+The name of the configuration property to update.
 
 ```yaml
 Type: String
@@ -46,7 +50,11 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
-{{Fill Scope Description}}
+
+The scope at which to update the value.
+
+This parameter is not required. If not specified the value will be updated in the User scope. The final
+value used is applied in the scope order Machine, Enterprise and User.
 
 ```yaml
 Type: String
@@ -62,7 +70,8 @@ Accept wildcard characters: False
 ```
 
 ### -Value
-{{Fill Value Description}}
+
+The value to set the configuration property to.
 
 ```yaml
 Type: String
@@ -77,6 +86,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -84,11 +94,15 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ### None
 
-
 ## OUTPUTS
 
-### System.Object
+### Hashtable
 
 ## NOTES
 
+The configuration values control the behavior of the scaffolding commands.
+
 ## RELATED LINKS
+
+[about_PoshForge](about_PoshForge)
+[about_PoshForge_Configuration](about_PoshForge_Configuration)
