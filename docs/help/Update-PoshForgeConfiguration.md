@@ -1,7 +1,7 @@
 ---
 external help file: PoshForge-help.xml
 Module Name: poshforge
-online version: https://poshforge.readthedocs.io/en/latest/help/Update-PoshForgeConfiguration/
+online version: https://poshforge.readthedocs.io/en/latest/help/Updatebui   -PoshForgeConfiguration/
 schema: 2.0.0
 ---
 
