@@ -9,7 +9,9 @@ pages:
 - About:
   - Contributing to PoshForge: about/Contributing.md
   - PoshForge Change Log: about/ChangeLog.md
-- Functions:
+- Reference:
+  - about_PoshForge: help/about_PoshForge.md
+  - about_PoshForge_Configuration: help/about_PoshForge_Configuration.md
   - Get-PoshForgeConfiguration: help/Get-PoshForgeConfiguration.md
   - Get-PoshForgeConfigurationPath: help/Get-PoshForgeConfigurationPath.md
   - New-ModuleProject: help/New-ModuleProject.md
