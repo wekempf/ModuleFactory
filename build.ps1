@@ -13,15 +13,17 @@ param (
 
 begin {
     if (-not (Get-Command 'Invoke-Build' -ErrorAction SilentlyContinue)) {
+        Write-Verbose 'Invoke-Build command not found...'
         $tools = Join-Path $PsScriptRoot '.tools'
         New-Item $tools -ItemType Directory -Force | Out-Null
         $oldModulePath = $env:PSModulePath
         $env:PSModulePath += ";$tools"
         try {
             if (-not (Test-Path (Join-Path $tools InvokeBuild))) {
+                Write-Verbose 'Saving InvokeBuild module to .tools...'
                 Save-Module -Name InvokeBuild -Path $tools
             }
-            Write-Host "Importing InvokeBuild"
+            Write-Verbose 'Importing InvokeBuild'
             Import-Module InvokeBuild
         }
         finally {
